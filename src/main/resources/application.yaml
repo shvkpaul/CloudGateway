@@ -8,23 +8,38 @@ spring:
     import: configserver:http://localhost:9296
   cloud:
     gateway:
-#      discovery:
-#        locator:
-#          enabled: true
-#          lower-case-service-id: true
+      #      discovery:
+      #        locator:
+      #          enabled: true
+      #          lower-case-service-id: true
       routes:
         - id: ORDER-PROCESSING-SERVICE
           uri: lb://ORDER-PROCESSING-SERVICE
           predicates:
             - Path=/order/**
+          filters:
+            - name: CircuitBreaker
+              args:
+                name: ORDER-PROCESSING-SERVICE
+                fallbackuri: forward:/orderProcessingServiceFallback
         - id: PAYMENT-SERVICE
           uri: lb://PAYMENT-SERVICE
           predicates:
             - Path=/payment/**
+          filters:
+            - name: CircuitBreaker
+              args:
+                name: PAYMENT-SERVICE
+                fallbackuri: forward:/paymentServiceFallback
         - id: PRODUCT-CATALOG-SERVICE
           uri: lb://PRODUCT-CATALOG-SERVICE
           predicates:
             - Path=/product/**
+          filters:
+            - name: CircuitBreaker
+              args:
+                name: PRODUCT-CATALOG-SERVICE
+                fallbackuri: forward:/productCatalogServiceFallback
 
 logging:
   level:
