@@ -8,15 +8,23 @@ spring:
     import: configserver:http://localhost:9296
   cloud:
     gateway:
-      discovery:
-        locator:
-          enabled: true
-          lower-case-service-id: true
+#      discovery:
+#        locator:
+#          enabled: true
+#          lower-case-service-id: true
       routes:
-        - id: service-routes
-          uri: lb://**
+        - id: ORDER-PROCESSING-SERVICE
+          uri: lb://ORDER-PROCESSING-SERVICE
           predicates:
-            - Path=/**
+            - Path=/order/**
+        - id: PAYMENT-SERVICE
+          uri: lb://PAYMENT-SERVICE
+          predicates:
+            - Path=/payment/**
+        - id: PRODUCT-CATALOG-SERVICE
+          uri: lb://PRODUCT-CATALOG-SERVICE
+          predicates:
+            - Path=/product/**
 
 logging:
   level:
