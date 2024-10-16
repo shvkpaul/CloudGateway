@@ -22,6 +22,7 @@ spring:
               args:
                 name: ORDER-PROCESSING-SERVICE
                 fallbackuri: forward:/orderProcessingServiceFallback
+            - name: AuthenticationFilter
         - id: PAYMENT-SERVICE
           uri: lb://PAYMENT-SERVICE
           predicates:
@@ -31,6 +32,7 @@ spring:
               args:
                 name: PAYMENT-SERVICE
                 fallbackuri: forward:/paymentServiceFallback
+            - name: AuthenticationFilter
         - id: PRODUCT-CATALOG-SERVICE
           uri: lb://PRODUCT-CATALOG-SERVICE
           predicates:
@@ -40,6 +42,7 @@ spring:
               args:
                 name: PRODUCT-CATALOG-SERVICE
                 fallbackuri: forward:/productCatalogServiceFallback
+            - name: AuthenticationFilter
         - id: IDENTITY-SERVICE
           uri: lb://IDENTITY-SERVICE
           predicates:
