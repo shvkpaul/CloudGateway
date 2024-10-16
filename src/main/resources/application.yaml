@@ -40,6 +40,15 @@ spring:
               args:
                 name: PRODUCT-CATALOG-SERVICE
                 fallbackuri: forward:/productCatalogServiceFallback
+        - id: IDENTITY-SERVICE
+          uri: lb://IDENTITY-SERVICE
+          predicates:
+            - Path=/auth/**
+          filters:
+            - name: CircuitBreaker
+              args:
+                name: IDENTITY-SERVICE
+                fallbackuri: forward:/identityServiceFallback
 
 logging:
   level:
@@ -51,4 +60,3 @@ management:
   tracing:
     sampling:
       probability: 1.0
-

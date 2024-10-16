@@ -20,4 +20,9 @@ public class FallbackController {
     public String productCatalogServiceFallback() {
         return "Product Catalog Service is Down!";
     }
+
+    @GetMapping("/identityServiceFallback")
+    public String identityServiceFallback() {
+        return "Identity Service is Down!";
+    }
 }
